@@ -14,4 +14,7 @@ import java.util.Optional;
 public interface OfferRepository extends PagingAndSortingRepository<Offer, Integer> {
     List<Offer> findByOrder(Order order, Sort firstSort);
 
-    Optional<Offer> findByOrderAndExpert(Order order, Expert expert);}
+    Optional<Offer> findByOrderAndExpert(Order order, Expert expert);
+
+    Offer save(Offer offer);
+}
