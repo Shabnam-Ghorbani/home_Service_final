@@ -8,4 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface SubServiceRepository extends CrudRepository<SubService, Integer> {
-    Optional<SubService> findByName(String name);}
+    Optional<SubService> findByName(String name);
+
+    Optional<SubService> findById(Integer id);
+}
