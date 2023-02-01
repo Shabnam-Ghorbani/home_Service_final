@@ -14,8 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode
-public class SubService extends BaseEntity{
+public class SubService extends BaseEntity {
 
     @Column(unique = true)
     private String name;
@@ -30,4 +29,26 @@ public class SubService extends BaseEntity{
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Expert> experts = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "SubService{" +
+                ", name='" + name + '\'' +
+                ", basePrice=" + basePrice +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SubService that = (SubService) o;
+        return Objects.equals(name, that.name) && Objects.equals(basePrice, that.basePrice) && Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, basePrice, description);
+    }
 }
