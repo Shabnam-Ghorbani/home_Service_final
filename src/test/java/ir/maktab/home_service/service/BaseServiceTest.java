@@ -3,33 +3,36 @@ package ir.maktab.home_service.service;
 import ir.maktab.home_service.data.model.entity.BaseService;
 import ir.maktab.home_service.exception.EntityIsExistException;
 import ir.maktab.home_service.exception.EntityNotExistException;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BaseServiceTest {
+    BaseService baseService = BaseService.builder().name("Cleaning and hygiene").build();
     @Autowired
     private BaseServiceService baseServiceService;
-    BaseService baseService = BaseService.builder().name("Cleaning and hygiene").build();
-
 
     @Test
     @Order(1)
     public void baseService_SaveTest() {
-        BaseService savedMainService = baseServiceService.save(baseService);
-        assertEquals(baseService, savedMainService);
+        BaseService baseService = BaseService.builder().name("Cleaning and hygiene").build();
+        BaseService savedBaseService = baseServiceService.save(baseService);
+        assertEquals(baseService, savedBaseService);
     }
 
     @Test
     @Order(2)
     public void duplicateBaseService_Test() {
         baseService = BaseService.builder().name("Cleaning and hygiene").build();
-        EntityIsExistException thrown = assertThrows(EntityIsExistException.class, () -> baseServiceService.save(baseService));
-        assertTrue(thrown.getMessage().contains("this baseService  exist!"));
+        boolean thrown = assertThrows(EntityIsExistException.class, () -> baseServiceService.save(baseService)).
+                getMessage().contains("this BaseService exist");
     }
 
     @Test
