@@ -6,6 +6,7 @@ import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -14,7 +15,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode
 public class BaseService extends BaseEntity {
 
     @Column(unique = true)
@@ -22,4 +22,24 @@ public class BaseService extends BaseEntity {
 
     @OneToMany(mappedBy = "baseService")
     private Set<SubService> subServices = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "BaseService{" +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BaseService that = (BaseService) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }
