@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class Offer extends BaseEntity{
+public class Offer extends BaseEntity {
 
     @ManyToOne
     private Expert expert;
