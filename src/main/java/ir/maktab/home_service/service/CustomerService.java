@@ -9,6 +9,7 @@ import ir.maktab.home_service.data.model.entity.Order;
 import ir.maktab.home_service.data.model.repository.CustomerRepository;
 import ir.maktab.home_service.exception.EntityIsExistException;
 import ir.maktab.home_service.exception.EntityNotExistException;
+import ir.maktab.home_service.exception.InCorrectException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,10 @@ public class CustomerService {
         }
     }
 
+    public Customer update(Customer customer) {
+        return customerRepository.save(customer);
+    }
+
     public Customer findByEmailAddress(String emailAddress) {
         Optional<Customer> customer = customerRepository.findByEmailAddress(emailAddress);
         return customer.orElseThrow(() -> new EntityNotExistException("emailAddress not exist!"));
@@ -49,6 +54,17 @@ public class CustomerService {
                 offer.setOfferStatus(OfferStatus.REJECTED);
             }
             offerService.save(offer);
+        }
+    }
+
+    public Customer changePassword(Customer customer, String currentPassword, String newPassword) {
+        String password = customer.getPassword();
+        if (password.equals(currentPassword)) {
+            customer.setPassword(newPassword);
+            System.out.println("your password change successfully.");
+            return update(customer);
+        } else {
+            throw new InCorrectException("password is wrong!");
         }
     }
 }
