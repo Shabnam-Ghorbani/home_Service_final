@@ -1,19 +1,24 @@
 package ir.maktab.home_service.service;
 
 import ir.maktab.home_service.data.model.entity.Address;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AddressServiceTest {
+    private static Address address;
     @Autowired
     private AddressService addressService;
-    private static Address address;
 
     @Test
+    @Order(1)
     public void saveAddressTest() {
         address = Address
                 .builder()
@@ -28,6 +33,7 @@ public class AddressServiceTest {
     }
 
     @Test
+    @Order(2)
     public void ExistAddressTest() {
         address = Address
                 .builder()
