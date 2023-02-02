@@ -7,6 +7,8 @@ import ir.maktab.home_service.exception.EntityIsExistException;
 import ir.maktab.home_service.exception.EntityNotExistException;
 import ir.maktab.home_service.exception.InCorrectException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,6 +16,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ExpertService {
+    private static final Logger logger = LoggerFactory.getLogger(ExpertService.class);
+
     private final ExpertRepository expertRepository;
 
     public Expert save(Expert expert) {
@@ -56,7 +60,7 @@ public class ExpertService {
         String password = expert.getPassword();
         if (password.equals(currentPassword)) {
             expert.setPassword(newPassword);
-            System.out.println("your password change successfully.");
+            logger.info("your password change successfully");
             return updatee(expert);
         } else {
             throw new InCorrectException("password is wrong!");
