@@ -11,6 +11,8 @@ import ir.maktab.home_service.exception.EntityIsExistException;
 import ir.maktab.home_service.exception.EntityNotExistException;
 import ir.maktab.home_service.exception.InCorrectException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,6 +21,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
+    private static final Logger logger = LoggerFactory.getLogger(ExpertService.class);
     private final CustomerRepository customerRepository;
     private final OrderService orderService;
     private final OfferService offerService;
@@ -61,7 +64,7 @@ public class CustomerService {
         String password = customer.getPassword();
         if (password.equals(currentPassword)) {
             customer.setPassword(newPassword);
-            System.out.println("your password change successfully.");
+            logger.info("your password change successfully");
             return update(customer);
         } else {
             throw new InCorrectException("password is wrong!");
