@@ -1,11 +1,12 @@
 package ir.maktab.home_service.service;
 
+import ir.maktab.home_service.data.model.enamiration.PersonStatus;
 import ir.maktab.home_service.data.model.enamiration.Role;
-import ir.maktab.home_service.data.model.enamiration.UserStatus;
 import ir.maktab.home_service.data.model.entity.Customer;
 import ir.maktab.home_service.exception.EntityIsExistException;
 import ir.maktab.home_service.exception.EntityNotExistException;
 import ir.maktab.home_service.exception.InCorrectException;
+import ir.maktab.home_service.service.impl.CustomerService;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ public class CustomerServiceTest {
             .emailAddress("sabaabdi64@gmail.com")
             .password("Saba6040")
             .role(Role.CUSTOMER)
-            .userStatus(UserStatus.NEW)
+            .personStatus(PersonStatus.NEW)
             .credit(0L)
             .build();
     @Autowired
@@ -39,7 +40,7 @@ public class CustomerServiceTest {
                 .emailAddress("sabaabdi64@gmail.com")
                 .password("Saba6040")
                 .role(Role.CUSTOMER)
-                .userStatus(UserStatus.NEW)
+                .personStatus(PersonStatus.NEW)
                 .credit(0L)
                 .build();
         Customer savedCustomer = customerService.save(customer);
@@ -55,7 +56,7 @@ public class CustomerServiceTest {
                 .emailAddress("sabaabdi64@gmail.com")
                 .password("Saba6040")
                 .role(Role.CUSTOMER)
-                .userStatus(UserStatus.NEW)
+                .personStatus(PersonStatus.NEW)
                 .credit(0L)
                 .build();
         boolean thrown = assertThrows(EntityIsExistException.class, () -> customerService.save(customer)).
