@@ -3,6 +3,7 @@ package ir.maktab.home_service.service;
 import ir.maktab.home_service.data.model.entity.BaseService;
 import ir.maktab.home_service.exception.EntityIsExistException;
 import ir.maktab.home_service.exception.EntityNotExistException;
+import ir.maktab.home_service.service.impl.BaseServiceService;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
