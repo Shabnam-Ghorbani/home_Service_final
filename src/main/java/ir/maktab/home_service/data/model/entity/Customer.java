@@ -14,7 +14,9 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer extends User {
+public class Customer extends Person {
+
+    private Long credit;
 
     @OneToMany(mappedBy = "customer")
     private List<Order> instruction;
