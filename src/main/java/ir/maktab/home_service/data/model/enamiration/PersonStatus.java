@@ -1,9 +1,9 @@
 package ir.maktab.home_service.data.model.enamiration;
 
-public enum UserStatus {
+public enum PersonStatus {
     CONFIRMED, WAITING, NEW;
 
-    public static UserStatus getValue(String status) {
+    public static PersonStatus getValue(String status) {
         switch (status.toLowerCase()) {
             case "confirmed":
                 return CONFIRMED;
