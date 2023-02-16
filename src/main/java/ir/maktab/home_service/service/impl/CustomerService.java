@@ -93,7 +93,7 @@ public class CustomerService implements CustomInter {
     @Override
     @Transactional
     public boolean existsByEmail(String emailAddress) {
-        return customerRepository.existsByEmail(emailAddress);
+        return customerRepository.existsByEmailAddress(emailAddress);
     }
 
     @Override
