@@ -1,11 +1,13 @@
 package ir.maktab.home_service.service;
 
+import ir.maktab.home_service.data.model.enamiration.PersonStatus;
 import ir.maktab.home_service.data.model.enamiration.Role;
-import ir.maktab.home_service.data.model.enamiration.UserStatus;
 import ir.maktab.home_service.data.model.entity.Expert;
 import ir.maktab.home_service.exception.EntityIsExistException;
 import ir.maktab.home_service.exception.EntityNotExistException;
 import ir.maktab.home_service.exception.InCorrectException;
+import ir.maktab.home_service.service.impl.ExpertService;
+import ir.maktab.home_service.service.impl.Image;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -41,7 +43,7 @@ public class ExpertServiceTest {
                 .emailAddress("shabnamghorbani90@gmail.com")
                 .password("ShabNam1234")
                 .credit(0L)
-                .userStatus(UserStatus.NEW)
+                .personStatus(PersonStatus.NEW)
                 .score(5.0)
                 .photo(image)
                 .role(Role.EXPERT)
@@ -72,7 +74,7 @@ public class ExpertServiceTest {
     @Test
     @org.junit.jupiter.api.Order(5)
     public void changePassword_Test() {
-        Expert expert1 = expertService.findById(352);
+        Expert expert1 = expertService.findById(352); //My userName
         Expert updatedUser = expertService.changePassword(expert1, "ShabNam1234", "shAb9090");
         assertEquals(updatedUser.getPassword(), "shAb9090");
     }
