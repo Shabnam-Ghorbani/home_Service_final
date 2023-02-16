@@ -4,7 +4,9 @@ import ir.maktab.home_service.data.model.enamiration.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,15 +32,22 @@ public class Order extends BaseEntity {
     private String jobDescription;
 
     @CreationTimestamp
-    private Date orderRegistrationDate;
+    private Date orderRegistrationDate; //ToDo
+
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private Date dateOfWorkPerformed;
+    private Date dateOfWorkPerformed; //ToDo
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private Address address;
+
+    private String description;
+
+    private LocalDateTime executionTime;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -52,4 +61,20 @@ public class Order extends BaseEntity {
 
     @ManyToOne
     private Expert expert;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "subService=" + subService +
+                ", proposedPrice=" + proposedPrice +
+                ", jobDescription='" + jobDescription + '\'' +
+                ", orderRegistrationDate=" + orderRegistrationDate +
+                ", dateOfWorkPerformed=" + dateOfWorkPerformed +
+                ", address=" + address +
+                ", customer=" + customer +
+                ", orderStatus=" + orderStatus +
+                ", offers=" + offers +
+                ", expert=" + expert +
+                '}';
+    }
 }
