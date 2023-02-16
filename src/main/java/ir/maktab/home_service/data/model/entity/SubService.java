@@ -4,9 +4,7 @@ package ir.maktab.home_service.data.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -29,6 +27,9 @@ public class SubService extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Expert> experts = new HashSet<>();
+
+    @OneToMany(mappedBy = "subService", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
 
     @Override
     public String toString() {
