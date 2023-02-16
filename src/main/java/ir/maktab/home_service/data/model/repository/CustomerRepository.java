@@ -10,13 +10,13 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
-    Optional<Customer> findByEmailAddress(String email);
+    Optional<Customer> findByEmailAddress(String emailAddress);
 
     @Modifying
     @Query("update Customer c set c.credit = :newCredit where c.id = :id")
     int updateCredit(Integer id, Long newCredit);
 
-    boolean existsByEmail(String emailAddress);
+    boolean existsByEmailAddress(String emailAddress);
 
     @Modifying
     @Query(" update Customer c set c.password = :newPassword where c.id = :id")
