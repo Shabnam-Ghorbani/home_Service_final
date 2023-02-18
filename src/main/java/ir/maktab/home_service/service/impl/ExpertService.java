@@ -8,7 +8,9 @@ import ir.maktab.home_service.data.model.entity.*;
 import ir.maktab.home_service.data.model.repository.*;
 import ir.maktab.home_service.dto.filter.ExpertFilterDTO;
 import ir.maktab.home_service.exception.*;
+import ir.maktab.home_service.service.interf.ConfirmationTokenService;
 import ir.maktab.home_service.service.interf.ExpInter;
+import ir.maktab.home_service.token.ConfirmationToken;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -19,6 +21,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +29,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class ExpertService implements ExpInter {
     private static final Logger logger = LoggerFactory.getLogger(ExpertService.class);
     private final ExpertRepository expertRepository;
+    private final ConfirmationTokenService confirmationTokenService;
+
+    private final EmailSenderServiceImpl emailSenderService;
 
     private final BCryptPasswordEncoder passwordEncoder;
 
@@ -140,6 +147,31 @@ public class ExpertService implements ExpInter {
     @Override
     public void updateCredit(Integer expertId, Long newCredit) {
         expertRepository.updateCredit(expertId, newCredit);
+    }
+
+    @Override
+    public String signUpWithValidation(Expert expert, String imageName, Long imageSize) {
+        if (findByEmailAddress(expert.getEmailAddress()).isPresent())
+            throw new DuplicateConfirmException("this email already exist!");
+        if (findById(expert.getId()).isPresent())
+            throw new DuplicateConfirmException("this username already exist!");
+        Validation.checkImage(imageName, imageSize);
+
+        expert.setPassword(passwordEncoder.encode(expert.getPassword()));
+        expert.setPersonStatus(PersonStatus.NEW);
+        expert.setRoleStatus(RoleStatus.ROLE_EXPERT);
+        expert.setIsActive(false);
+        expert.setCredit(0L);
+        expert.setScore((double) 0);
+        save(expert);
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(expert);
+        confirmationToken.setConfirmationToken(UUID.randomUUID().toString());
+        confirmationTokenService.saveOrUpdate(confirmationToken);
+
+        SimpleMailMessage mailMessage = emailSenderService.createEmail(expert.getEmailAddress(), confirmationToken.getConfirmationToken(), "expert");
+        emailSenderService.sendEmail(mailMessage);
+        return imageName;
     }
 
     @Override
@@ -324,6 +356,10 @@ public class ExpertService implements ExpInter {
                                         LocalDateTime.parse(filter.getMaxCreationDate())));
             }
         }
+    }
+
+    public void activeExpert(String emailAddress, PersonStatus waiting) {
+
     }
 }
 
