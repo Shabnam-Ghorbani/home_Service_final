@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/expert/**").hasRole("EXPERT")
                 .requestMatchers("/customer/**").hasRole("CUSTOMER")
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                 .httpBasic()
                 .and()
