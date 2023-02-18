@@ -44,14 +44,14 @@ public class ManagerController {
 
     }
 
-    @DeleteMapping("/deleteBAseService/{id}") //ToDo
+    @DeleteMapping("/deleteBAseService/{id}")
     public void deleteBAseService(@PathVariable Integer id) {
         managerService.deleteBAseService(id);
     }
 
-    @PostMapping("/addSubService/{id}") //ToDo check
+    @PostMapping("/addSubService/{id}")
     public void addSubService(@RequestBody BaseServiceSubServiceDto baseServiceSubServiceDto,@PathVariable Integer id) {
-        managerService.addSubService(baseServiceSubServiceDto.getBaseServiceId(),
+        managerService.addSubService(id,
                 SubService.builder()
                         .name(baseServiceSubServiceDto.getName())
                         .basePrice(baseServiceSubServiceDto.getBasePrice())
