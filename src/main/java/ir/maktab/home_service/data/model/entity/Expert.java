@@ -73,4 +73,8 @@ public class Expert extends Person implements Comparable<Expert> {
             return 1;
         else return -1;
     }
+
+    public boolean isPresent() { // todo baresi shavad shaboo
+        return Boolean.parseBoolean(null);
+    }
 }
