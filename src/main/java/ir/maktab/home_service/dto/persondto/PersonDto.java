@@ -17,7 +17,7 @@ public class PersonDto {
     private String lastname;
 
     @Email(message = "the format of the email is incorrect!")
-    private String email;
+    private String  emailAddress;
 
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8}$",
             message = "the password must contain numbers, lowercase and uppercase letters")
