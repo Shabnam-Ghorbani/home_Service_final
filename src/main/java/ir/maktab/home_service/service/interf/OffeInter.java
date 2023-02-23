@@ -22,7 +22,7 @@ public interface OffeInter {
 
     List<Offer> findOfferOrderExpertScore(Integer id);
 
-    List<Offer> findByOrder(Order order);
+   // List<Offer> findByOrder(Order order);
 
     Offer findByOrderAndExpert(Order order, Expert expert);
 
