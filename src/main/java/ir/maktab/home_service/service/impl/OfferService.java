@@ -90,11 +90,11 @@ public class OfferService implements OffeInter {
     }
 
     //ToDo sort  with score this method and method bala :) ShaBoo ba in SaThe ZaBan FaGhat AfghanEstAn GarDan MiGirAdEt
-    @Override
-    public List<Offer> findByOrder(Order order) {
-        return offerRepository.findByOrder((jakarta.persistence.criteria.Order) order,
-                Sort.by("expert.score", "proposedPrice").descending());
-    }
+//    @Override
+//    public List<Offer> findByOrder(Order order) {
+//        return offerRepository.findByOrder((jakarta.persistence.criteria.Order) order,
+//                Sort.by("expert.score", "proposedPrice").descending());
+//    }
 
     @Override
     public Offer findByOrderAndExpert(Order order, Expert expert) {
@@ -130,5 +130,5 @@ public class OfferService implements OffeInter {
     @Override
     public int calculateNumberOfRegisteredOffers(Integer expertId, Boolean isAccept) {
         return offerRepository.calculateNumberOfRegisteredOffers(expertId, isAccept);
-    }
-}
+    }    }
+
