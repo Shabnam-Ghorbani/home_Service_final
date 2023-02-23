@@ -8,9 +8,9 @@ import ir.maktab.home_service.data.model.entity.*;
 import ir.maktab.home_service.data.model.repository.*;
 import ir.maktab.home_service.dto.filter.ExpertFilterDTO;
 import ir.maktab.home_service.exception.*;
-import ir.maktab.home_service.service.interf.ConfirmationTokenService;
+//import ir.maktab.home_service.service.interf.ConfirmationService;
 import ir.maktab.home_service.service.interf.ExpInter;
-import ir.maktab.home_service.token.ConfirmationToken;
+//import ir.maktab.home_service.token.Confirmation;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -36,7 +36,7 @@ import java.util.UUID;
 public class ExpertService implements ExpInter {
     private static final Logger logger = LoggerFactory.getLogger(ExpertService.class);
     private final ExpertRepository expertRepository;
-    private final ConfirmationTokenService confirmationTokenService;
+  //  private final ConfirmationService confirmationTokenService;
 
     private final EmailSenderServiceImpl emailSenderService;
 
@@ -149,30 +149,30 @@ public class ExpertService implements ExpInter {
         expertRepository.updateCredit(expertId, newCredit);
     }
 
-    @Override
-    public String signUpWithValidation(Expert expert, String imageName, Long imageSize) {
-        if (findByEmailAddress(expert.getEmailAddress()).isPresent())
-            throw new DuplicateConfirmException("this email already exist!");
-        if (findById(expert.getId()).isPresent())
-            throw new DuplicateConfirmException("this username already exist!");
-        Validation.checkImage(imageName, imageSize);
-
-        expert.setPassword(passwordEncoder.encode(expert.getPassword()));
-        expert.setPersonStatus(PersonStatus.NEW);
-        expert.setRoleStatus(RoleStatus.ROLE_EXPERT);
-        expert.setIsActive(false);
-        expert.setCredit(0L);
-        expert.setScore((double) 0);
-        save(expert);
-
-        ConfirmationToken confirmationToken = new ConfirmationToken(expert);
-        confirmationToken.setConfirmationToken(UUID.randomUUID().toString());
-        confirmationTokenService.saveOrUpdate(confirmationToken);
-
-        SimpleMailMessage mailMessage = emailSenderService.createEmail(expert.getEmailAddress(), confirmationToken.getConfirmationToken(), "expert");
-        emailSenderService.sendEmail(mailMessage);
-        return imageName;
-    }
+//    @Override
+//    public String signUpWithValidation(Expert expert, String imageName, Long imageSize) {
+//        if (findByEmailAddress(expert.getEmailAddress()).isPresent())
+//            throw new DuplicateConfirmException("this email already exist!");
+//        if (findById(expert.getId()).isPresent())
+//            throw new DuplicateConfirmException("this username already exist!");
+//        Validation.checkImage(imageName, imageSize);
+//
+//        expert.setPassword(passwordEncoder.encode(expert.getPassword()));
+//        expert.setPersonStatus(PersonStatus.NEW);
+//        expert.setRoleStatus(RoleStatus.ROLE_EXPERT);
+//        expert.setIsActive(false);
+//        expert.setCredit(0L);
+//        expert.setScore((double) 0);
+//        save(expert);
+//
+//        Confirmation confirm = new Confirmation(expert);
+//        confirm.setConfirmation(UUID.randomUUID().toString());
+//        confirmationTokenService.saveOrUpdate(confirm);
+//
+//        SimpleMailMessage mailMessage = emailSenderService.createEmail(expert.getEmailAddress(), confirm.getConfirmation(), "expert");
+//        emailSenderService.sendEmail(mailMessage);
+//        return imageName;
+//    }
 
     @Override
     public void update(Expert expert) {
