@@ -18,9 +18,9 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConfirmationToken extends BaseEntity {
+public class Confirmation extends BaseEntity {
 
-    private String confirmationToken;
+    private String confirmation;
     @OneToOne(targetEntity = Person.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "person_id")
     private Person person;
@@ -30,7 +30,7 @@ public class ConfirmationToken extends BaseEntity {
         return this.getId() == null;
     }
 
-    public ConfirmationToken(Person person) {
+    public Confirmation(Person person) {
         this.person = person;
     }
 
