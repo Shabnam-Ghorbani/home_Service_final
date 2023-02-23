@@ -61,7 +61,7 @@ public class CustomerController {
                 Customer.builder()
                         .firstname(personDTO.getFirstname())
                         .lastname(personDTO.getLastname())
-                        .emailAddress(personDTO.getEmail())
+                        .emailAddress(personDTO.getEmailAddress())
                         .password(personDTO.getPassword())
                         .build()
         );
@@ -197,7 +197,7 @@ public class CustomerController {
     }
 
     @GetMapping("/viewCredit")
-    public Long viewCredit(Authentication authentication) {
+    public Long vieBwCredit(Authentication authentication) {
         Customer authenticatedCustomer = (Customer) authentication.getPrincipal();
         return customerService.viewCredit(authenticatedCustomer.getId());
     }
