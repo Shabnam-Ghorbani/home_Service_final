@@ -1,56 +1,30 @@
 package ir.maktab.home_service.service.impl;
 
-import ir.maktab.home_service.data.model.enamiration.PersonStatus;
 import ir.maktab.home_service.data.model.entity.Expert;
-import ir.maktab.home_service.exception.DuplicateConfirmException;
-import ir.maktab.home_service.exception.NotFoundException;
-import ir.maktab.home_service.service.interf.ConfirmationTokenService;
-import ir.maktab.home_service.token.ConfirmationToken;
-import jakarta.transaction.Transactional;
+//import ir.maktab.home_service.service.interf.ConfirmationService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class ExpertRegistrationService {
 
-    private final ConfirmationTokenService confirmTokenService;
-    private final EmailServiceImpl emailService;
-    private final ExpertService expertService;
+  //  private final ConfirmationService confirmService;
+//    private final EmailServiceImpl emailService;
+//    private final ExpertService expertService;
 
-    public ExpertRegistrationService(ConfirmationTokenService confirmTokenService, EmailServiceImpl emailService, ExpertService expertService) {
-        this.confirmTokenService = confirmTokenService;
-        this.emailService = emailService;
-        this.expertService = expertService;
-    }
-
-    public String register(Expert expert, String imageName, Long imageSize) {
-        String tokenForNewExpert = expertService.signUpWithValidation(expert, imageName, imageSize);
-        String link = "http://localhost:8080/signup/expert/confirm?token=" + tokenForNewExpert;
-        emailService.sendEmail(expert.getEmailAddress(), createEmail(expert.getFirstname(), link));
-        return tokenForNewExpert;
-    }
-//
-//    @Transactional
-//    public String confirmToken(String token) {
-//        Optional<ConfirmationToken> confirmToken = confirmTokenService.getToken(token);
-//
-//        if (confirmToken.isEmpty())
-//            throw new NotFoundException("Token not found!");
-//        if (confirmToken.get().getConfirmedAt() )
-//            throw new DuplicateConfirmException("Email is already confirmed");
-//
-//        LocalDateTime expiresAt = confirmToken.get().getExpiresAt();
-//
-//        if (expiresAt.isBefore(LocalDateTime.now()))
-//            throw new DuplicateConfirmException("Token is already expired!");
-//
-//        confirmTokenService.setConfirmedAt(token);
-//        expertService.activeExpert(confirmToken.get().getPerson().getEmailAddress(), PersonStatus.WAITING);
-//
-//        return "Your email is confirmed. Thank you for using our service!";
+//    public ExpertRegistrationService(ConfirmationService confirmTokenService, EmailServiceImpl emailService, ExpertService expertService) {
+//        this.confirmService = confirmTokenService;
+//        this.emailService = emailService;
+//        this.expertService = expertService;
 //    }
+
+//    public String register(Expert expert, String imageName, Long imageSize) {
+//        String tokenForNewExpert = expertService.signUpWithValidation(expert, imageName, imageSize);
+//        String link = "http://localhost:8080/signup/expert/confirm?token=" + tokenForNewExpert;
+//        emailService.sendEmail(expert.getEmailAddress(), createEmail(expert.getFirstname(), link));
+//        return tokenForNewExpert;
+//    }
+
 
     private String createEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
