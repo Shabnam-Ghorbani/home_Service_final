@@ -38,7 +38,7 @@ public interface ExpInter {
 
     void updateCredit(Integer expertId, Long newCredit);
 
-    String signUpWithValidation(Expert expert, String imageName, Long imageSize);
+   // String signUpWithValidation(Expert expert, String imageName, Long imageSize);
 
     void signUp(Expert expert, String imageName, Long imageSize);
 
