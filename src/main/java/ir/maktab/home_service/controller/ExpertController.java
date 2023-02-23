@@ -41,7 +41,7 @@ public class ExpertController {
             expertService.signUp(Expert.builder()
                             .firstname(personDTO.getFirstname())
                             .lastname(personDTO.getLastname())
-                    .emailAddress(personDTO.getEmail())
+                    .emailAddress(personDTO.getEmailAddress())
                             .password(personDTO.getPassword())
                     .photo(multipartFile.getBytes())
                             .build(),
